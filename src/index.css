@@ -1,0 +1,17 @@
+@import "tailwindcss";
+/* @plugin "daisyui"; */
+@import "daisyui/daisyui.css";
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-success: #0D9488;
+  --color-secondary: teal;
+}
+
+.swiper-button-next, .swiper-button-prev {
+    color: white !important;
+    transform: scale(0.7);
+}
+.swiper-pagination-bullet-active {
+    background-color: #0D9488 !important; /* Blue color */
+}
