@@ -1,6 +1,6 @@
 
 
-const AllProducts = () => {
+const AllProperties = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const AllProducts = () => {
     );
 };
 
-export default AllProducts;
+export default AllProperties;

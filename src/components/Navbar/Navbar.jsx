@@ -14,6 +14,13 @@ const Navbar = () => {
       <li><NavLink to="/">Home</NavLink></li>
       <li><NavLink to="/allProperties">All Properties</NavLink></li>
       <li><NavLink to="/register">register</NavLink></li>
+      
+      {
+        user && <>
+              <li><NavLink to="/addProperty">Add Property</NavLink></li>
+              <li><NavLink to="/myProperties">My Properties</NavLink></li>
+        </>
+      }
   </>
   
 
@@ -48,12 +55,12 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    {
+    {/* {
       user?
       <img src={user.image} alt="" />
       :
       <img src="https://i.ibb.co.com/kVf0hhMY/download-23.jpg" alt="" />
-    }
+    } */}
     
     {
       user ?

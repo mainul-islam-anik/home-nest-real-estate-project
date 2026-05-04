@@ -6,7 +6,7 @@ import '../../index.css'
 
 
 const Login = () => {
-    const { signInUser, signInWithGoogle, user, loading} = use(AuthContext)
+    const { signInUser, signInWithGoogle, user, loading, setLoading} = use(AuthContext)
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -25,34 +25,6 @@ const Login = () => {
       //User Login
       await signInUser(email, password)
         
-
-        // .then(result => {
-                // console.log(result);
-                // const newUser = {
-                //     name: result.user.displayName,
-                //     email: result.user.email,
-                //     image: result.user.photoURL
-                // }
-
-                // create user in the database
-                // fetch('http://localhost:3000/users',{
-                //     method: 'POST',
-                //     headers: {
-                //         'content-type': 'application/json'
-                //     },
-                //     body: JSON.stringify(newUser)
-                // })
-                //     .then(res => res.json())
-                //     .then(data => {
-                //         console.log('data after user save', data)
-                //     })
-
-            // })
-            // .catch(error => {
-            //     console.log(error)
-            // })
-
-
       navigate(from, { replace: true })
       Swal.fire({
         position: "top-end",
@@ -73,6 +45,30 @@ const Login = () => {
     try {
       //User Registration using google
       await signInWithGoogle()
+
+      .then(result => {
+                console.log("result",result);
+                const newUser = {
+                    name: result.user.displayName,
+                    email: result.user.email,
+                    image: result.user.photoURL
+                }
+                console.log('newUser',newUser)
+
+                // create user in the database
+                fetch('http://localhost:3000/users',{
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(newUser)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log('data after user save', data)
+                    })
+    })
+
       navigate(from, { replace: true })
       Swal.fire({
         position: "top-end",
