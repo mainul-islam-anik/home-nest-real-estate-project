@@ -13,6 +13,7 @@ import AllProperties from './components/AllProperties/AllProperties.jsx';
 import MyProperties from './components/MyProperties/MyProperties.jsx';
 import AddProperty from './components/AddProperty/AddProperty.jsx';
 import PrivateRouter from './Routers/PrivateRouter.jsx';
+import MyRatings from './components/MyRatings/MyRatings.jsx';
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: 'addProperty',
         element: <PrivateRouter><AddProperty></AddProperty></PrivateRouter>
+      },
+      {
+        path: 'myRatings',
+        element: <PrivateRouter><MyRatings></MyRatings></PrivateRouter>
       }
     ]
   },
