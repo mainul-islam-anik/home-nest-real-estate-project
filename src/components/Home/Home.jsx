@@ -1,12 +1,18 @@
 import Banner from "./Banner";
-import Footer from "./Footer";
+import LatestProperties from "./LatestProperties";
+import OurServices from "./OurServices";
+import Testimonials from "./Testimonials";
+import WhyChooseUs from "./WhyChooseUs";
 
 
 const Home = () => {
     return (
         <div>
             <Banner></Banner>
-            <Footer></Footer>
+            <LatestProperties></LatestProperties>
+            <WhyChooseUs></WhyChooseUs>
+            <OurServices></OurServices>
+            <Testimonials></Testimonials>
         </div>
     );
 };
