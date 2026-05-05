@@ -3,10 +3,10 @@ import { AuthContext } from "./AuthContext";
 import { useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.init";
 
-const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
+    const googleProvider = new GoogleAuthProvider();
     const [loading, setLoading] = useState(true);
     const createUser = (email, password)=>{
         setLoading(true);

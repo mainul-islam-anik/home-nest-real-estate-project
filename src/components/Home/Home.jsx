@@ -4,12 +4,14 @@ import OurServices from "./OurServices";
 import Testimonials from "./Testimonials";
 import WhyChooseUs from "./WhyChooseUs";
 
+const latestPropertiesPromise = fetch("http://localhost:3000/latest-properties").then(res =>res.json())
 
 const Home = () => {
+
     return (
         <div>
             <Banner></Banner>
-            <LatestProperties></LatestProperties>
+            <LatestProperties latestPropertiesPromise={latestPropertiesPromise}></LatestProperties>
             <WhyChooseUs></WhyChooseUs>
             <OurServices></OurServices>
             <Testimonials></Testimonials>

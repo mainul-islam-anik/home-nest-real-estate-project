@@ -14,6 +14,7 @@ import MyProperties from './components/MyProperties/MyProperties.jsx';
 import AddProperty from './components/AddProperty/AddProperty.jsx';
 import PrivateRouter from './Routers/PrivateRouter.jsx';
 import MyRatings from './components/MyRatings/MyRatings.jsx';
+import PropertyDetails from './components/PropertyDetails/PropertyDetails.jsx';
 
 
 const router = createBrowserRouter([
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'allProperties',
+        loader: ({params})=> fetch('http://localhost:3000/properties'),
         Component: AllProperties
       },
       {
@@ -48,6 +50,11 @@ const router = createBrowserRouter([
       {
         path: 'myRatings',
         element: <PrivateRouter><MyRatings></MyRatings></PrivateRouter>
+      },
+      {
+        path: 'propertyDetails/:id',
+        loader: ({params}) => fetch(`http://localhost:3000/properties/${params.id}`),
+        element: <PrivateRouter><PropertyDetails></PropertyDetails></PrivateRouter>
       }
     ]
   },
