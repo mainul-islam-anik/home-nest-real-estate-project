@@ -10,10 +10,10 @@ const AllProperties = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {allProperties.map((item) => (
                         <div key={item._id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col h-full">
-                            <img src={item.image} alt={item.name} className="h-56 w-full object-cover" />
+                            <img src={item.image} alt={item.propertyName} className="h-56 w-full object-cover" />
                             <div className="p-6 flex flex-col flex-grow">
                                 <span className="text-success font-semibold text-sm uppercase tracking-wider">{item.category}</span>
-                                <h3 className="text-xl font-bold text-gray-900 mt-2 mb-3">{item.name}</h3>
+                                <h3 className="text-xl font-bold text-gray-900 mt-2 mb-3">{item.propertyName}</h3>
                                 <p className="text-gray-600 flex items-center gap-2 mb-4">
                                     <span className="material-icons text-sm">location_on</span> {item.location}
                                 </p>

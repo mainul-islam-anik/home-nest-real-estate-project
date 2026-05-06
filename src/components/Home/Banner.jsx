@@ -8,6 +8,7 @@ import 'swiper/css/pagination';
 
 // Import required modules
 import { Navigation, Pagination, Autoplay, EffectFade } from 'swiper/modules';
+import { Link } from 'react-router';
 
 const Banner = () => {
     const slides = [
@@ -23,14 +24,14 @@ const Banner = () => {
             image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200",
             title: "The best location for business success",
             description: "Easily find premium office spaces and commercial land to expand your business.",
-            buttonText: "Learn more"
+            buttonText: "View all properties"
         },
         {
             id: 3,
             image: "https://i.ibb.co.com/ksfwSwfS/download-25.jpg",
             title: "Premium housing at the best value within your budget",
             description: "Make a home built with attractive design and durable construction your permanent address—at a low budget.",
-            buttonText: "Book now"
+            buttonText: "View all properties"
         }
     ];
 
@@ -65,9 +66,8 @@ const Banner = () => {
 
                                    
                                     <div className="flex flex-wrap gap-4 justify-center">
-                                        <button className="bg-success hover:bg-success-500 text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg">
-                                            {slide.buttonText}
-                                        </button>
+                                        <Link to="/allProperties" className="bg-success hover:bg-white hover:text-black text-white px-8 py-3 rounded-lg font-semibold transition-all transform hover:scale-105 shadow-lg">{slide.buttonText}</Link>
+                                        
                                         <button className="border-2 border-white hover:bg-white hover:text-black text-white px-8 py-3 rounded-lg font-semibold transition-all shadow-lg">
                                             Contact us
                                         </button>

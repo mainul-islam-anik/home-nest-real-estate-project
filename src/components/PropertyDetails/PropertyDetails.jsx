@@ -1,34 +1,60 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { FaStar,  FaMapMarkerAlt,  FaEnvelope, FaPhoneAlt, FaCalendarAlt } from 'react-icons/fa';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../../AuthContext/AuthContext';
 // FaRegStar,FaUser,
 
 
 const PropertyDetails = () => {
     // এটি আপনার দেওয়া ডামি ডাটা, বাস্তবে এটি useParams() দিয়ে API থেকে আসবে
+    const user = useContext(AuthContext);
     const property = useLoaderData() 
-    console.log(property)     ;
+    // console.log(property);
 
     // রেটিং এবং রিভিউ স্টেট
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState("");
 
+
     const handleReviewSubmit = (e) => {
-        e.preventDefault();
-        // এখানে আপনার ডাটাবেসে রিভিউ সেভ করার লজিক হবে
-        console.log({ rating, reviewText });
-        Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Thank you for your review!",
-            showConfirmButton: false,
-            timer: 1500
-            });
-        setRating(0);
-        setReviewText("");
+    e.preventDefault();
+
+    if (!user) {
+    Swal.fire("Error!", "Please login to give a review", "error");
+    return;
+}
+
+    // রিভিউ অবজেক্ট তৈরি
+    const reviewData = {
+        propertyId: property._id, // প্রপার্টির আইডি
+        propertyName: property.propertyName,
+        propertyImage: property.image,
+        reviewerName: user?.displayName, // AuthContext থেকে আসবে
+        reviewerEmail: user?.email,
+        reviewerPhoto: user?.photoURL,
+        rating: rating,
+        reviewText: reviewText,
+        reviewDate: new Date().toISOString()
     };
+
+    // ডাটাবেসে পাঠানোর জন্য fetch/axios ব্যবহার করুন
+    fetch('http://localhost:3000/reviews', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(reviewData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.insertedId) {
+            Swal.fire("Success!", "Thank you for your review!", "success");
+            setRating(0);
+            setReviewText("");
+            // এখানে রিভিউ লিস্ট রি-ফেচ করার লজিক দিতে পারেন
+        }
+    });
+};
 
     return (
         
@@ -105,6 +131,8 @@ const PropertyDetails = () => {
                                 </button>
                             </form>
                         </div>
+
+
                     </div>
 
                     {/* Right Side: Price & Seller Info (1 column wide) */}
