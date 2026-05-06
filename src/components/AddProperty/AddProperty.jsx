@@ -1,9 +1,13 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router';
 
 const AddProperty = () => {
     const { user } = useContext(AuthContext);
+   const navigate = useNavigate()
+   const location = useLocation()
+  const from = location.state || '/'
 
     const handleAddProperty = (e) => {
         e.preventDefault();
@@ -19,6 +23,7 @@ const AddProperty = () => {
         const sellerEmail = user?.email;
         const sellerContact = form.sellerContact.value;
         const sellerImage = user?.photoURL;
+        
 
         const newProperty = {
             propertyName,
@@ -31,7 +36,8 @@ const AddProperty = () => {
             sellerEmail,
             sellerContact,
             sellerImage,
-            status: 'pending'
+            status: 'pending',
+            createdAt: new Date().toISOString()
         };
 
         
@@ -47,15 +53,23 @@ const AddProperty = () => {
                     .then(res => res.json())
                     .then(data => {
                         console.log('data after product save', data)
-                    })
+                        Swal.fire({
+            title: "Success!",
+            text: "Property added successfully to the listing.",
+            icon: "success",
+            confirmButtonColor: "#22C55E",
+        });
 
         
+                    })
+                    navigate(from, { replace: true })
         Swal.fire({
             title: "Success!",
             text: "Property added successfully to the listing.",
             icon: "success",
             confirmButtonColor: "#22C55E",
         });
+        
         
         form.reset();
     };

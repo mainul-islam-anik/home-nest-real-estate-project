@@ -13,9 +13,10 @@ import AllProperties from './components/AllProperties/AllProperties.jsx';
 import MyProperties from './components/MyProperties/MyProperties.jsx';
 import AddProperty from './components/AddProperty/AddProperty.jsx';
 import PrivateRouter from './Routers/PrivateRouter.jsx';
-// import MyRatings from './components/MyRatings/MyRatings.jsx';
+import MyRatings from './components/MyRatings/MyRatings.jsx';
 import PropertyDetails from './components/PropertyDetails/PropertyDetails.jsx';
 import UpdateProperty from './components/UpdateProperty/UpdateProperty.jsx';
+import NotFound from './components/NotFound/NotFound.jsx';
 
 
 const router = createBrowserRouter([
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'allProperties',
-        loader: ({params})=> fetch('http://localhost:3000/properties'),
+        // loader: ({params})=> fetch('http://localhost:3000/properties'),
         Component: AllProperties
       },
       {
@@ -50,10 +51,10 @@ const router = createBrowserRouter([
         path: 'addProperty',
         element: <PrivateRouter><AddProperty></AddProperty></PrivateRouter>
       },
-      // {
-      //   path: 'myRatings',
-      //   element: <PrivateRouter><MyRatings></MyRatings></PrivateRouter>
-      // },
+      {
+        path: 'myRatings',
+        element: <PrivateRouter><MyRatings></MyRatings></PrivateRouter>
+      },
       {
         path: 'propertyDetails/:id',
         loader: ({params}) => fetch(`http://localhost:3000/properties/${params.id}`),
@@ -63,7 +64,11 @@ const router = createBrowserRouter([
         path: 'updateProperty/:id',
         loader: ({params}) => fetch(`http://localhost:3000/properties/${params.id}`),
         element: <PrivateRouter><UpdateProperty></UpdateProperty></PrivateRouter>
-      }
+      },
+            {
+        path: "*",
+        element: <NotFound></NotFound>
+}
     ]
   },
 ]);

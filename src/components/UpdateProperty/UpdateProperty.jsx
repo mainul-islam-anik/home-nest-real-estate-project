@@ -52,7 +52,7 @@ const UpdateProperty = () => {
                     showConfirmButton: false
                 });
                 // ৩. আপডেট শেষে ডিটেইলস পেজে নেভিগেট করা
-                navigate(`/myProperties`);
+                navigate(`/propertyDetails/${id}`)
             }
         });
     };

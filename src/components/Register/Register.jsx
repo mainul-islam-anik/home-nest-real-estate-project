@@ -10,57 +10,94 @@ const Register = () => {
   const from = location.state || '/'
 
   // form submit handler
+
   const handleSubmit = async (event) => {
-    event.preventDefault()
-    const form = event.target
-    const name = form.name.value
-    const email = form.email.value
-    const password = form.password.value
-    const image = form.image.value
-    try {
-      //2. User Registration
-      const result = await createUser(email, password)
-            .then(result => {
-                console.log("result",result);
-                const newUser = {
-                    name,
-                    email,
-                    image,
-                    password
-                }
-                console.log('newUser',newUser)
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const image = form.image.value;
 
-                // create user in the database
-                fetch('http://localhost:3000/users',{
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(newUser)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log('data after user save', data)
-                    })
-    })
-
-
-      console.log(result)
-
-      navigate(from, { replace: true })
-       Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Sign In successfully",
-              showConfirmButton: false,
-              timer: 1500
-      });
-      form.reset();
-    } catch (err) {
-      console.log(err)
-    //   toast.error(err?.message)
+    // --- Password Validation ---
+    
+    // 1. Length Check (at least 6 characters)
+    if (password.length < 6) {
+        return Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Password must be at least 6 characters long.",
+        });
     }
-  }
+
+    // 2. Uppercase Letter Check
+    if (!/[A-Z]/.test(password)) {
+        return Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Password must contain at least one uppercase letter.",
+        });
+    }
+
+    // 3. Lowercase Letter Check
+    if (!/[a-z]/.test(password)) {
+        return Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Password must contain at least one lowercase letter.",
+        });
+    }
+    
+    // --- End of Validation ---
+
+    try {
+        // 2. User Registration in Firebase
+        const result = await createUser(email, password);
+        console.log("Firebase Result:", result);
+
+        const newUser = {
+            name,
+            email,
+            image,
+            // Storing passwords in DB is usually not recommended, 
+            // but keep it if your assignment requires it.
+            password 
+        };
+
+        // Create user in the database
+        const response = await fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+        });
+        
+        const data = await response.json();
+        console.log('Database save result:', data);
+
+        // Success Alert
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Registration successful!",
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+        form.reset();
+        navigate(from, { replace: true });
+
+    } catch (err) {
+        console.error(err);
+        Swal.fire({
+            icon: "error",
+            title: "Registration Failed",
+            text: err.message,
+        });
+    }
+};
+ 
   return (
     <div className='flex justify-center items-center min-h-screen bg-white my-5'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>

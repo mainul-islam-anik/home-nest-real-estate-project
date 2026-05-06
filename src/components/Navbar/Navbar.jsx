@@ -1,11 +1,23 @@
 import { useContext } from "react";
 import { Link, NavLink } from "react-router";
+import { useEffect, useState } from "react";
 import { AuthContext } from "../../AuthContext/AuthContext";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
   const {user, signOutUser }= useContext(AuthContext)
-  console.log(user)
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+        // html ট্যাগে ডাটা থিম সেট করা (DaisyUI এর জন্য)
+        document.querySelector('html').setAttribute('data-theme', theme);
+        localStorage.setItem("theme", theme);
+    }, [theme]);
+
+    const handleToggle = () => {
+        setTheme(theme === "light" ? "dark" : "light");
+    };
+  
   const handleSignOut = ()=>{
     signOutUser()
     .then(()=>{
@@ -37,8 +49,9 @@ const Navbar = () => {
   
 
     return (
-        <div className="navbar bg-base-100 shadow-sm">
-  <div className="navbar-start">
+        <div className=" bg-base-100 shadow-sm">
+   <div className="navbar container mx-auto px-4">
+      <div className="navbar-start">
     <div className="dropdown z-50">
       <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
@@ -66,9 +79,16 @@ const Navbar = () => {
       {links}
     </ul>
   </div>
-
-        {/* conditional */}
+  {/* conditional */}
   <div className="navbar-end z-50">
+
+    <button 
+        onClick={handleToggle} 
+        className="btn btn-ghost btn-circle text-xl"
+        title={theme === "light" ? "Switch to Dark Mode" : "Switch to Light Mode"}
+    >
+        {theme === "light" ? "🌙" : "☀️"}
+    </button>
         {user ? (
           
           <div className="dropdown dropdown-end z-50">
@@ -100,6 +120,7 @@ const Navbar = () => {
           </div>
         )}
       </div>
+   </div>
 </div>
     );
 };

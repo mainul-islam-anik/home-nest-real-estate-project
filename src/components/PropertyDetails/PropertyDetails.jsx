@@ -1,72 +1,72 @@
-import { useContext, useState } from 'react';
-import { FaStar,  FaMapMarkerAlt,  FaEnvelope, FaPhoneAlt, FaCalendarAlt } from 'react-icons/fa';
+import { useContext, useEffect, useState } from 'react';
+import { FaStar, FaMapMarkerAlt, FaEnvelope, FaPhoneAlt, FaCalendarAlt } from 'react-icons/fa';
 import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../AuthContext/AuthContext';
-// FaRegStar,FaUser,
-
 
 const PropertyDetails = () => {
-    // এটি আপনার দেওয়া ডামি ডাটা, বাস্তবে এটি useParams() দিয়ে API থেকে আসবে
-    const user = useContext(AuthContext);
-    const property = useLoaderData() 
-    // console.log(property);
+    const { user } = useContext(AuthContext); // user অবজেক্টটি ডি-স্ট্রাকচার করে নিন
+    const property = useLoaderData();
 
-    // রেটিং এবং রিভিউ স্টেট
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState("");
+    const [reviews, setReviews] = useState([]); // ইনিশিয়াল স্টেট খালি অ্যারে
 
+    // ১. এই প্রপার্টির সকল রিভিউ ডাটাবেস থেকে নিয়ে আসার জন্য useEffect
+    useEffect(() => {
+        fetch(`http://localhost:3000/reviews/${property._id}`)
+        // fetch(`http://localhost:3000/properties/reviews/${property._id}`)
+            .then(res => res.json())
+            .then(data => setReviews(data));
+    }, [property._id]);
 
     const handleReviewSubmit = (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (!user) {
-    Swal.fire("Error!", "Please login to give a review", "error");
-    return;
-}
+        if (!user) {
+            Swal.fire("Error!", "Please login to give a review", "error");
+            return;
+        }
 
-    // রিভিউ অবজেক্ট তৈরি
-    const reviewData = {
-        propertyId: property._id, // প্রপার্টির আইডি
-        propertyName: property.propertyName,
-        propertyImage: property.image,
-        reviewerName: user?.displayName, // AuthContext থেকে আসবে
-        reviewerEmail: user?.email,
-        reviewerPhoto: user?.photoURL,
-        rating: rating,
-        reviewText: reviewText,
-        reviewDate: new Date().toISOString()
+        const reviewData = {
+            propertyId: property._id,
+            propertyName: property.propertyName,
+            propertyImage: property.image,
+            reviewerName: user.displayName,
+            reviewerEmail: user.email,
+            reviewerPhoto: user.photoURL,
+            rating: rating,
+            reviewText: reviewText,
+            reviewDate: new Date().toISOString()
+        };
+
+        fetch('http://localhost:3000/reviews', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify(reviewData)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.insertedId) {
+                Swal.fire("Success!", "Thank you for your review!", "success");
+                
+                // ২. রিভিউ সেভ হওয়ার পর সাথে সাথে লিস্টে দেখানোর জন্য
+                const newReviewForDisplay = { ...reviewData, _id: data.insertedId };
+                setReviews([newReviewForDisplay, ...reviews]); 
+                
+                setRating(0);
+                setReviewText("");
+            }
+        });
     };
 
-    // ডাটাবেসে পাঠানোর জন্য fetch/axios ব্যবহার করুন
-    fetch('http://localhost:3000/reviews', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify(reviewData)
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.insertedId) {
-            Swal.fire("Success!", "Thank you for your review!", "success");
-            setRating(0);
-            setReviewText("");
-            // এখানে রিভিউ লিস্ট রি-ফেচ করার লজিক দিতে পারেন
-        }
-    });
-};
-
     return (
-        
         <div className="bg-gray-50 min-h-screen py-12">
             <div className="container mx-auto px-4 max-w-6xl">
-                
-                {/* Main Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    
-                    {/* Left Side: Image & Details (2 columns wide) */}
+                    {/* Left Side: Image & Details */}
                     <div className="lg:col-span-2 space-y-8">
-                        {/* Property Image */}
                         <div className="rounded-2xl overflow-hidden shadow-lg bg-white">
                             <img src={property.image} alt={property.propertyName} className="w-full h-[400px] object-cover" />
                             <div className="p-6">
@@ -83,28 +83,25 @@ const PropertyDetails = () => {
                                     <FaMapMarkerAlt className="text-blue-600" /> {property.location}
                                 </p>
                                 <h3 className="text-xl font-semibold mb-3">Description</h3>
-                                <p className="text-gray-700 leading-relaxed text-justify">
-                                    {property.description}
-                                </p>
+                                <p className="text-gray-700 leading-relaxed text-justify">{property.description}</p>
                             </div>
                         </div>
 
-                        {/* Ratings & Reviews Section */}
+                        {/* Ratings & Reviews Form */}
                         <div className="bg-white p-8 rounded-2xl shadow-lg">
-                            <h3 className="text-2xl font-bold mb-6">Ratings & Reviews</h3>
+                            <h3 className="text-2xl font-bold mb-6">Write a Review</h3>
                             <form onSubmit={handleReviewSubmit} className="space-y-4">
-                                {/* Star Selection */}
                                 <div className="flex items-center gap-2">
                                     <span className="text-gray-700 font-medium">Your Rating:</span>
-                                    {[...Array(5)].map((star, index) => {
-                                        index += 1;
+                                    {[...Array(5)].map((_, index) => {
+                                        const starValue = index + 1;
                                         return (
                                             <button
                                                 type="button"
-                                                key={index}
-                                                className={`text-2xl transition-colors ${index <= (hover || rating) ? "text-yellow-400" : "text-gray-300"}`}
-                                                onClick={() => setRating(index)}
-                                                onMouseEnter={() => setHover(index)}
+                                                key={starValue}
+                                                className={`text-2xl transition-colors ${starValue <= (hover || rating) ? "text-yellow-400" : "text-gray-300"}`}
+                                                onClick={() => setRating(starValue)}
+                                                onMouseEnter={() => setHover(starValue)}
                                                 onMouseLeave={() => setHover(rating)}
                                             >
                                                 <FaStar />
@@ -112,44 +109,32 @@ const PropertyDetails = () => {
                                         );
                                     })}
                                 </div>
-
-                                {/* Review Textarea */}
                                 <textarea
                                     className="w-full border border-gray-200 rounded-xl p-4 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
                                     rows="4"
-                                    placeholder="Write your experience with this property..."
+                                    placeholder="Write your experience..."
                                     value={reviewText}
                                     onChange={(e) => setReviewText(e.target.value)}
                                     required
                                 ></textarea>
-
-                                <button 
-                                    type="submit"
-                                    className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md"
-                                >
+                                <button type="submit" className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md">
                                     Submit Review
                                 </button>
                             </form>
                         </div>
-
-
                     </div>
 
-                    {/* Right Side: Price & Seller Info (1 column wide) */}
+                    {/* Right Side: Price & Seller Info */}
                     <div className="space-y-8">
-                        {/* Pricing Card */}
                         <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-600">
                             <p className="text-gray-500 text-sm uppercase font-bold tracking-wider">Price</p>
                             <div className="flex items-baseline gap-1">
                                 <span className="text-4xl font-extrabold text-blue-700">${property.price}</span>
                                 {property.category === "Rent" && <span className="text-gray-500">/month</span>}
                             </div>
-                            <button className="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">
-                                Buy/Rent Now
-                            </button>
+                            <button className="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Buy/Rent Now</button>
                         </div>
 
-                        {/* Seller Contact Info */}
                         <div className="bg-white p-8 rounded-2xl shadow-lg">
                             <h4 className="text-lg font-bold mb-6 border-b pb-2">Listed By</h4>
                             <div className="flex items-center gap-4 mb-6">
@@ -159,17 +144,32 @@ const PropertyDetails = () => {
                                     <p className="text-xs text-gray-500 italic">Verified Seller</p>
                                 </div>
                             </div>
-                            <div className="space-y-4 text-sm">
-                                <div className="flex items-center gap-3 text-gray-700">
-                                    <FaEnvelope className="text-blue-500" /> <span>{property.sellerEmail}</span>
-                                </div>
-                                <div className="flex items-center gap-3 text-gray-700">
-                                    <FaPhoneAlt className="text-blue-500" /> <span>{property.sellerContact}</span>
-                                </div>
+                            <div className="space-y-4 text-sm text-gray-700">
+                                <div className="flex items-center gap-3"><FaEnvelope className="text-blue-500" /> <span>{property.sellerEmail}</span></div>
+                                <div className="flex items-center gap-3"><FaPhoneAlt className="text-blue-500" /> <span>{property.sellerContact}</span></div>
                             </div>
                         </div>
-                    </div>
 
+                        {/* ৩. রিভিউ লিস্ট ডিসপ্লে (ম্যাপ ফাংশনে return যোগ করা হয়েছে) */}
+                        <div className="mt-8 space-y-6">
+                            <h4 className="text-xl font-bold border-b pb-2 text-gray-800">Recent Reviews ({reviews.length})</h4>
+                            {reviews.length === 0 ? <p className="text-gray-500 text-sm italic">No reviews yet.</p> :
+                                reviews.map((review) => (
+                                    <div key={review._id} className="p-4 bg-white rounded-xl shadow-sm border border-gray-100">
+                                        <div className="flex gap-3 items-center mb-2">
+                                            <img src={review.reviewerPhoto} className="w-8 h-8 rounded-full" alt="" />
+                                            <p className="font-bold text-sm">{review.reviewerName}</p>
+                                        </div>
+                                        <div className="flex text-yellow-400 text-xs mb-2">
+                                            {[...Array(review.rating)].map((_, i) => <FaStar key={i} />)}
+                                        </div>
+                                        <p className="text-gray-600 text-sm italic">"{review.reviewText}"</p>
+                                        <p className="text-[10px] text-gray-400 mt-2">{new Date(review.reviewDate).toLocaleDateString()}</p>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
