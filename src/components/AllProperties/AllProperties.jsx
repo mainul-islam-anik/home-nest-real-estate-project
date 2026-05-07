@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import axios from "axios"; // axios অথবা fetch যেকোনোটি ব্যবহার করতে পারেন
+import axios from "axios"; 
 
 const AllProperties = () => {
     const [allProperties, setAllProperties] = useState([]);
     const [search, setSearch] = useState("");
     const [sort, setSort] = useState("");
 
-    // ডাটা ফেচ করার ফাংশন
+    
     useEffect(() => {
         const fetchProperties = async () => {
             const { data } = await axios.get(
@@ -16,7 +16,7 @@ const AllProperties = () => {
             setAllProperties(data);
         };
         fetchProperties();
-    }, [search, sort]); // search বা sort চেঞ্জ হলে অটোমেটিক ডাটা ফেচ হবে
+    }, [search, sort]); 
 
     return (
         <section className="py-16 bg-gray-50">
