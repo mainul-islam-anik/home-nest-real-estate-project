@@ -43,7 +43,7 @@ const AddProperty = () => {
         
         console.log(newProperty);
 
-        fetch('http://localhost:3000/properties',{
+        fetch('https://home-nest-server-navy.vercel.app/properties',{
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'

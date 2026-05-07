@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'allProperties',
-        // loader: ({params})=> fetch('http://localhost:3000/properties'),
+        // loader: ({params})=> fetch('https://home-nest-server-navy.vercel.app/properties'),
         Component: AllProperties
       },
       {
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'myProperties',
-        loader: ({params}) => fetch(`http://localhost:3000/properties/${params.id}`),
+        loader: ({params}) => fetch(`https://home-nest-server-navy.vercel.app/properties/${params.id}`),
 
         element: <PrivateRouter><MyProperties></MyProperties></PrivateRouter>
       },
@@ -57,20 +57,21 @@ const router = createBrowserRouter([
       },
       {
         path: 'propertyDetails/:id',
-        loader: ({params}) => fetch(`http://localhost:3000/properties/${params.id}`),
+        loader: ({params}) => fetch(`https://home-nest-server-navy.vercel.app/properties/${params.id}`),
         element: <PrivateRouter><PropertyDetails></PropertyDetails></PrivateRouter>
       },
       {
         path: 'updateProperty/:id',
-        loader: ({params}) => fetch(`http://localhost:3000/properties/${params.id}`),
+        loader: ({params}) => fetch(`https://home-nest-server-navy.vercel.app/properties/${params.id}`),
         element: <PrivateRouter><UpdateProperty></UpdateProperty></PrivateRouter>
       },
-            {
+          
+    ]
+  },
+   {
         path: "*",
         element: <NotFound></NotFound>
 }
-    ]
-  },
 ]);
 
 

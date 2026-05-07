@@ -15,7 +15,7 @@ const MyProperties = () => {
     // ডাটা ফেচ করা (শুধুমাত্র এই ইউজারের ইমেইল অনুযায়ী)
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/myProperties?email=${user.email}`, {
+            fetch(`https://home-nest-server-navy.vercel.app/myProperties?email=${user.email}`, {
                 headers: {
                     authorization: `Barer ${user.accessToken}`
                 }
@@ -43,7 +43,7 @@ const MyProperties = () => {
     }).then((result) => {
         if (result.isConfirmed) {
             // ব্যাকএন্ডে ডিলিট রিকোয়েস্ট পাঠানো
-            fetch(`http://localhost:3000/properties/${id}`, {
+            fetch(`https://home-nest-server-navy.vercel.app/properties/${id}`, {
                 method: 'DELETE'
             })
             .then(res => res.json())

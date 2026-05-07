@@ -4,7 +4,7 @@ import OurServices from "./OurServices";
 import Testimonials from "./Testimonials";
 import WhyChooseUs from "./WhyChooseUs";
 
-const latestPropertiesPromise = fetch("http://localhost:3000/latest-properties").then(res =>res.json())
+const latestPropertiesPromise = fetch("https://home-nest-server-navy.vercel.app/latest-properties").then(res =>res.json())
 
 const Home = () => {
 

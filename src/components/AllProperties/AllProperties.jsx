@@ -11,7 +11,7 @@ const AllProperties = () => {
     useEffect(() => {
         const fetchProperties = async () => {
             const { data } = await axios.get(
-                `http://localhost:3000/properties?search=${search}&sort=${sort}`
+                `https://home-nest-server-navy.vercel.app/properties?search=${search}&sort=${sort}`
             );
             setAllProperties(data);
         };

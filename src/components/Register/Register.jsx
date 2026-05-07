@@ -65,7 +65,7 @@ const Register = () => {
         };
 
         // Create user in the database
-        const response = await fetch('http://localhost:3000/users', {
+        const response = await fetch('https://home-nest-server-navy.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

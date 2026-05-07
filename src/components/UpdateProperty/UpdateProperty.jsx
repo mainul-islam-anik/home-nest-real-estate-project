@@ -13,7 +13,7 @@ const UpdateProperty = () => {
 
     // ১. ডাটাবেস থেকে বর্তমান ডাটা লোড করা (Pre-fill করার জন্য)
     useEffect(() => {
-        fetch(`http://localhost:3000/properties/${id}`)
+        fetch(`https://home-nest-server-navy.vercel.app/properties/${id}`)
             .then(res => res.json())
             .then(data => {
                 setProperty(data);
@@ -36,7 +36,7 @@ const UpdateProperty = () => {
         };
 
         // ২. MongoDB-তে ডাটা আপডেট করা (PATCH)
-        fetch(`http://localhost:3000/properties/${id}`, {
+        fetch(`https://home-nest-server-navy.vercel.app/properties/${id}`, {
             method: 'PATCH',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(updatedProperty)

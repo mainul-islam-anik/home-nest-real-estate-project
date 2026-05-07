@@ -5,18 +5,16 @@ import Swal from 'sweetalert2';
 import { AuthContext } from '../../AuthContext/AuthContext';
 
 const PropertyDetails = () => {
-    const { user } = useContext(AuthContext); // user অবজেক্টটি ডি-স্ট্রাকচার করে নিন
+    const { user } = useContext(AuthContext);
     const property = useLoaderData();
 
     const [rating, setRating] = useState(0);
     const [hover, setHover] = useState(0);
     const [reviewText, setReviewText] = useState("");
-    const [reviews, setReviews] = useState([]); // ইনিশিয়াল স্টেট খালি অ্যারে
-
-    // ১. এই প্রপার্টির সকল রিভিউ ডাটাবেস থেকে নিয়ে আসার জন্য useEffect
+    const [reviews, setReviews] = useState([]); 
+    
     useEffect(() => {
-        fetch(`http://localhost:3000/reviews/${property._id}`)
-        // fetch(`http://localhost:3000/properties/reviews/${property._id}`)
+        fetch(`https://home-nest-server-navy.vercel.app/reviews/${property._id}`)
             .then(res => res.json())
             .then(data => setReviews(data));
     }, [property._id]);
@@ -41,7 +39,7 @@ const PropertyDetails = () => {
             reviewDate: new Date().toISOString()
         };
 
-        fetch('http://localhost:3000/reviews', {
+        fetch('https://home-nest-server-navy.vercel.app/reviews', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify(reviewData)
@@ -51,7 +49,7 @@ const PropertyDetails = () => {
             if (data.insertedId) {
                 Swal.fire("Success!", "Thank you for your review!", "success");
                 
-                // ২. রিভিউ সেভ হওয়ার পর সাথে সাথে লিস্টে দেখানোর জন্য
+                
                 const newReviewForDisplay = { ...reviewData, _id: data.insertedId };
                 setReviews([newReviewForDisplay, ...reviews]); 
                 
@@ -71,7 +69,7 @@ const PropertyDetails = () => {
                             <img src={property.image} alt={property.propertyName} className="w-full h-[400px] object-cover" />
                             <div className="p-6">
                                 <div className="flex justify-between items-center mb-4">
-                                    <span className="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-sm font-bold uppercase">
+                                    <span className="bg-blue-100 text-success px-4 py-1 rounded-full text-sm font-bold uppercase">
                                         For {property.category}
                                     </span>
                                     <span className="text-gray-500 flex items-center gap-2 text-sm">
@@ -80,7 +78,7 @@ const PropertyDetails = () => {
                                 </div>
                                 <h1 className="text-3xl font-bold text-gray-900 mb-2">{property.propertyName}</h1>
                                 <p className="text-gray-600 flex items-center gap-2 mb-6">
-                                    <FaMapMarkerAlt className="text-blue-600" /> {property.location}
+                                    <FaMapMarkerAlt className="text-success" /> {property.location}
                                 </p>
                                 <h3 className="text-xl font-semibold mb-3">Description</h3>
                                 <p className="text-gray-700 leading-relaxed text-justify">{property.description}</p>
@@ -117,7 +115,7 @@ const PropertyDetails = () => {
                                     onChange={(e) => setReviewText(e.target.value)}
                                     required
                                 ></textarea>
-                                <button type="submit" className="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-md">
+                                <button type="submit" className="bg-success text-white px-8 py-3 rounded-xl font-bold hover:bg-secondary transition-all shadow-md">
                                     Submit Review
                                 </button>
                             </form>
@@ -126,13 +124,13 @@ const PropertyDetails = () => {
 
                     {/* Right Side: Price & Seller Info */}
                     <div className="space-y-8">
-                        <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-blue-600">
+                        <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-success">
                             <p className="text-gray-500 text-sm uppercase font-bold tracking-wider">Price</p>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-4xl font-extrabold text-blue-700">${property.price}</span>
+                                <span className="text-4xl font-extrabold text-secondary">${property.price}</span>
                                 {property.category === "Rent" && <span className="text-gray-500">/month</span>}
                             </div>
-                            <button className="w-full mt-6 bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition-all">Buy/Rent Now</button>
+                            <button className="w-full mt-6 bg-success text-white py-3 rounded-xl font-bold hover:bg-secondary transition-all">Buy/Rent Now</button>
                         </div>
 
                         <div className="bg-white p-8 rounded-2xl shadow-lg">
@@ -145,12 +143,12 @@ const PropertyDetails = () => {
                                 </div>
                             </div>
                             <div className="space-y-4 text-sm text-gray-700">
-                                <div className="flex items-center gap-3"><FaEnvelope className="text-blue-500" /> <span>{property.sellerEmail}</span></div>
-                                <div className="flex items-center gap-3"><FaPhoneAlt className="text-blue-500" /> <span>{property.sellerContact}</span></div>
+                                <div className="flex items-center gap-3"><FaEnvelope className="text-success" /> <span>{property.sellerEmail}</span></div>
+                                <div className="flex items-center gap-3"><FaPhoneAlt className="text-success" /> <span>{property.sellerContact}</span></div>
                             </div>
                         </div>
 
-                        {/* ৩. রিভিউ লিস্ট ডিসপ্লে (ম্যাপ ফাংশনে return যোগ করা হয়েছে) */}
+                        
                         <div className="mt-8 space-y-6">
                             <h4 className="text-xl font-bold border-b pb-2 text-gray-800">Recent Reviews ({reviews.length})</h4>
                             {reviews.length === 0 ? <p className="text-gray-500 text-sm italic">No reviews yet.</p> :

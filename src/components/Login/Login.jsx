@@ -57,7 +57,7 @@ form.reset();
                 console.log('newUser',newUser)
 
                 // create user in the database
-                fetch('http://localhost:3000/users',{
+                fetch('https://home-nest-server-navy.vercel.app/users',{
                     method: 'POST',
                     headers: {
                         'content-type': 'application/json'
