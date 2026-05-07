@@ -1,23 +1,39 @@
 @import "tailwindcss";
-/* @plugin "daisyui"; */
 @import "daisyui/daisyui.css";
-@plugin "daisyui/theme" {
-  name: "light";
-  default: true;
-  --color-success: #0D9488;
-  --color-secondary: #0F766E;
+
+/* বাটন হোভার ফিক্স */
+.bg-success {
+  background-color: #0D9488 !important;
+  border-color: #0D9488 !important;
+  color: white !important;
+  transition: background-color 0.3s ease;
 }
 
-.swiper-button-next, .swiper-button-prev {
-    color: white !important;
-    transform: scale(0.7);
-}
-.swiper-pagination-bullet-active {
-    background-color: #0D9488 !important; /* Blue color */
+/* মাউস হোভার করলে সেকেন্ডারি কালার হবে */
+.bg-success:hover {
+  background-color: #0F766E !important;
+  border-color: #0F766E !important;
 }
 
-.navbar a.active{
+/* Outline বাটন হোভার ফিক্স */
+.bg-success.bg-outline {
+  color: #0D9488 !important;
+  background-color: transparent !important;
+}
+
+.bg-success.bg-outline:hover {
+  background-color: #0F766E !important;
+  border-color: #0F766E !important;
+  color: white !important;
+}
+
+.text-success {
+  color: #0D9488 !important;
+}
+
+/* Navbar active state */
+.navbar a.active {
+  color: #0D9488 !important;
+  font-weight: bold;
   text-decoration: underline;
-  color: #0D9488;
-  font: bold;
 }

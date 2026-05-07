@@ -192,7 +192,7 @@ const AddProperty = () => {
                     <div className="md:col-span-2 mt-4">
                         <button 
                             type="submit" 
-                            className="btn btn-success w-full text-white font-bold text-lg hover:bg-secondary transition-all shadow-lg"
+                            className="btn bg-success w-full text-white font-bold text-lg hover:bg-success transition-all shadow-lg"
                         >
                             Add Property
                         </button>

@@ -67,9 +67,9 @@ const Navbar = () => {
     
         <div className="flex items-center gap-2 mb-4">
                             <div className="bg-success p-2 rounded-lg">
-                                <span className="text-white text-2xl font-bold">HN</span>
+                                <span className="text-white text-xl md:text-2xl lg:text-2xl font-bold">HN</span>
                             </div>
-                            <h2 className="text-2xl font-bold text-black tracking-wider">HomeNest</h2>
+                            <h2 className="text-xl md:text-2xl lg:text-2xl font-bold text-black tracking-wider">HomeNest</h2>
                         </div>
 
 
@@ -115,8 +115,8 @@ const Navbar = () => {
           </div>
         ) : (
           <div className="flex gap-2">
-            <Link to="/login" className="btn btn-success btn-outline btn-sm md:btn-md">Login</Link>
-            <Link to="/register" className="btn btn-success text-white btn-sm md:btn-md">Signup</Link>
+            <Link to="/login" className="btn bg-success bg-outline btn-sm md:btn-md">Login</Link>
+            <Link to="/register" className="btn bg-success text-white btn-sm md:btn-md">Signup</Link>
           </div>
         )}
       </div>

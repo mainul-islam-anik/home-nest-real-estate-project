@@ -127,7 +127,7 @@ const PropertyDetails = () => {
                         <div className="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-success">
                             <p className="text-gray-500 text-sm uppercase font-bold tracking-wider">Price</p>
                             <div className="flex items-baseline gap-1">
-                                <span className="text-4xl font-extrabold text-secondary">${property.price}</span>
+                                <span className="text-4xl font-extrabold text-success">${property.price}</span>
                                 {property.category === "Rent" && <span className="text-gray-500">/month</span>}
                             </div>
                             <button className="w-full mt-6 bg-success text-white py-3 rounded-xl font-bold hover:bg-secondary transition-all">Buy/Rent Now</button>

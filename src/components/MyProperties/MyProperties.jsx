@@ -75,7 +75,7 @@ const MyProperties = () => {
                 {myProperties.length === 0 ? (
                     <div className="text-center py-20 bg-white rounded-2xl shadow-sm">
                         <h3 className="text-xl text-gray-400 font-medium">You haven't posted any properties yet.</h3>
-                        <Link to="/addProperty" className="btn btn-success text-white mt-4">Post Now</Link>
+                        <Link to="/addProperty" className="btn bg-success text-white mt-4">Post Now</Link>
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -116,14 +116,14 @@ const MyProperties = () => {
                                         
                                         <button 
                                             onClick={() => handleDelete(prop._id)}
-                                            className="btn btn-sm btn-outline btn-error flex-1 gap-1"
+                                            className="btn btn-sm bg-outline btn-error flex-1 gap-1"
                                         >
                                             <FaTrashAlt /> Delete
                                         </button>
 
                                         <Link 
                                             to={`/propertyDetails/${prop._id}`} 
-                                            className="btn btn-sm btn-success text-white w-full gap-1 mt-2"
+                                            className="btn btn-sm bg-success text-white w-full gap-1 mt-2"
                                         >
                                             <FaEye /> View Details
                                         </Link>

@@ -120,7 +120,7 @@ const UpdateProperty = () => {
                     </div>
 
                     <div className="md:col-span-2 mt-4">
-                        <button type="submit" className="btn btn-success w-full text-white font-bold text-lg">Update Property</button>
+                        <button type="submit" className="btn bg-success w-full text-white font-bold text-lg">Update Property</button>
                     </div>
                 </form>
             </div>
