@@ -4,14 +4,14 @@ import { AuthContext } from '../../AuthContext/AuthContext';
 import Swal from 'sweetalert2';
 
 const UpdateProperty = () => {
-    const { id } = useParams(); // URL থেকে প্রপার্টি আইডি নেওয়া
+    const { id } = useParams(); 
     const { user } = useContext(AuthContext);
     const navigate = useNavigate();
     
     const [property, setProperty] = useState({});
     const [loading, setLoading] = useState(true);
 
-    // ১. ডাটাবেস থেকে বর্তমান ডাটা লোড করা (Pre-fill করার জন্য)
+    
     useEffect(() => {
         fetch(`https://home-nest-server-navy.vercel.app/properties/${id}`)
             .then(res => res.json())
@@ -35,7 +35,7 @@ const UpdateProperty = () => {
             image: form.image.value,
         };
 
-        // ২. MongoDB-তে ডাটা আপডেট করা (PATCH)
+        
         fetch(`https://home-nest-server-navy.vercel.app/properties/${id}`, {
             method: 'PATCH',
             headers: { 'content-type': 'application/json' },
@@ -51,7 +51,7 @@ const UpdateProperty = () => {
                     timer: 1500,
                     showConfirmButton: false
                 });
-                // ৩. আপডেট শেষে ডিটেইলস পেজে নেভিগেট করা
+                
                 navigate(`/propertyDetails/${id}`)
             }
         });

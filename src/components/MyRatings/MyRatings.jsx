@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { format } from 'date-fns'; // তারিখ ফরম্যাট করার জন্য (ঐচ্ছিক: npm install date-fns)
-import { FaStar } from 'react-icons/fa'; // স্টারের জন্য (npm install react-icons)
+import { format } from 'date-fns'; 
+import { FaStar } from 'react-icons/fa'; 
 import { AuthContext } from '../../AuthContext/AuthContext';
 
 const MyRatings = () => {
@@ -42,8 +42,7 @@ const MyRatings = () => {
                             <div className="card-body">
                                 <h2 className="card-title text-primary">{review.propertyName}</h2>
                                 <p className="text-sm text-gray-400">Reviewed by: {review.reviewerName}</p>
-                                
-                                {/* স্টার রেটিং */}
+                             
                                 <div className="flex items-center gap-1 my-2">
                                     {[...Array(5)].map((_, i) => (
                                         <FaStar 

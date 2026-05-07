@@ -9,7 +9,7 @@ const Navbar = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   useEffect(() => {
-        // html ট্যাগে ডাটা থিম সেট করা (DaisyUI এর জন্য)
+        
         document.querySelector('html').setAttribute('data-theme', theme);
         localStorage.setItem("theme", theme);
     }, [theme]);
