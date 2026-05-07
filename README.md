@@ -2,7 +2,7 @@
 
 HomeNest is a modern and user-friendly real estate platform designed to bridge the gap between property owners and seekers. Whether you are looking to buy, rent, or sell residential and commercial properties, HomeNest provides a seamless experience with real-time listings and detailed property insights.
 
-**Live Site URL:** [Your Live Site Link Here](https://your-live-link.netlify.app)
+**Live Site URL:** [https://home-nest-baa1f.web.app/]
 
 ---
 
@@ -22,7 +22,7 @@ HomeNest is a modern and user-friendly real estate platform designed to bridge t
 - **Backend:** Node.js, Express.js.
 - **Database:** MongoDB.
 - **Authentication:** Firebase Auth.
-- **Notifications:** SweetAlert2 / React Hot Toast.
+- **Notifications:** SweetAlert2 .
 - **Deployment:** Netlify (Client), Vercel (Server).
 
 ---
