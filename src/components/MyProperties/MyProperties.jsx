@@ -12,7 +12,7 @@ const MyProperties = () => {
     console.log(myProperties)
     const [loading, setLoading] = useState(true);
 
-    // ডাটা ফেচ করা (শুধুমাত্র এই ইউজারের ইমেইল অনুযায়ী)
+    
     useEffect(() => {
         if (user?.email) {
             fetch(`https://home-nest-server-navy.vercel.app/myProperties?email=${user.email}`, {
@@ -30,7 +30,7 @@ const MyProperties = () => {
         }
     }, [user]);
 
-    // ডিলিট ফাংশনালিটি
+    
     const handleDelete = (id) => {
     Swal.fire({
         title: "Are you sure?",
@@ -42,17 +42,17 @@ const MyProperties = () => {
         confirmButtonText: "Yes, delete it!"
     }).then((result) => {
         if (result.isConfirmed) {
-            // ব্যাকএন্ডে ডিলিট রিকোয়েস্ট পাঠানো
+            
             fetch(`https://home-nest-server-navy.vercel.app/properties/${id}`, {
                 method: 'DELETE'
             })
             .then(res => res.json())
             .then(data => {
                 if (data.deletedCount > 0) {
-                    // ১. সাকসেস মেসেজ দেখানো
+                    
                     Swal.fire("Deleted!", "Property has been removed.", "success");
                     
-                    // ২. রিফ্রেশ ছাড়া UI আপডেট করা (স্টেট থেকে ফিল্টার করা)
+                    
                     const remaining = myProperties.filter(prop => prop._id !== id);
                     setMyProperties(remaining);
                 }
