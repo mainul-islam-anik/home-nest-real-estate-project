@@ -15,7 +15,12 @@ const MyProperties = () => {
     // ডাটা ফেচ করা (শুধুমাত্র এই ইউজারের ইমেইল অনুযায়ী)
     useEffect(() => {
         if (user?.email) {
-            fetch(`http://localhost:3000/myProperties?email=${user.email}`)
+            fetch(`http://localhost:3000/myProperties?email=${user.email}`, {
+                headers: {
+                    authorization: `Barer ${user.accessToken}`
+                }
+            })
+
                 .then(res => res.json())
                 .then(data => {
                     setMyProperties(data);
@@ -23,7 +28,7 @@ const MyProperties = () => {
                     setLoading(false);
                 });
         }
-    }, [user?.email]);
+    }, [user]);
 
     // ডিলিট ফাংশনালিটি
     const handleDelete = (id) => {
