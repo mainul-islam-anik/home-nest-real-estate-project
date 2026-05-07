@@ -14,7 +14,7 @@ const Testimonials = () => {
                         <div key={rev.id} className="p-8 bg-gray-50 rounded-2xl shadow-sm border border-gray-100">
                             <p className="italic text-gray-600 mb-6">"{rev.text}"</p>
                             <div className="flex items-center gap-4">
-                                <img src={rev.img} alt={rev.name} className="w-12 h-12 rounded-full border-2 border-blue-500" />
+                                <img src={rev.img} alt={rev.name} className="w-12 h-12 rounded-full border-2 border-success" />
                                 <div>
                                     <h4 className="font-bold text-gray-900">{rev.name}</h4>
                                     <p className="text-sm text-gray-500">{rev.role}</p>

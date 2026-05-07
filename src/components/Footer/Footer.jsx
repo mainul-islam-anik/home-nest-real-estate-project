@@ -1,6 +1,6 @@
 
 import { FaFacebook, FaInstagram, FaLinkedin, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6'; // নতুন X লোগোর জন্য
+import { FaXTwitter } from 'react-icons/fa6'; 
 
 const Footer = () => {
     return (
@@ -59,7 +59,7 @@ const Footer = () => {
                                 <FaFacebook size={20} />
                             </a>
                             <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-black hover:text-white transition-all">
-                                <FaXTwitter size={20} /> {/* নতুন X লোগো */}
+                                <FaXTwitter size={20} /> 
                             </a>
                             <a href="#" className="bg-gray-800 p-3 rounded-full hover:bg-pink-600 hover:text-white transition-all">
                                 <FaInstagram size={20} />

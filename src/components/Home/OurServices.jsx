@@ -9,15 +9,15 @@ const OurServices = () => {
                     </p>
                     <ul className="space-y-4">
                         <li className="flex items-center gap-3">
-                            <span className="bg-blue-600 p-1 rounded-full text-white">✓</span> 
+                            <span className="bg-success p-1 rounded-full text-white">✓</span> 
                             Property Valuation & Market Analysis
                         </li>
                         <li className="flex items-center gap-3">
-                            <span className="bg-blue-600 p-1 rounded-full text-white">✓</span> 
+                            <span className="bg-success p-1 rounded-full text-white">✓</span> 
                             Legal Support & Documentation Assistance
                         </li>
                         <li className="flex items-center gap-3">
-                            <span className="bg-blue-600 p-1 rounded-full text-white">✓</span> 
+                            <span className="bg-success p-1 rounded-full text-white">✓</span> 
                             Home Loan & Financial Consulting
                         </li>
                     </ul>
